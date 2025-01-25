@@ -19,7 +19,7 @@
     protected override async Task OnInitializedAsync()
     {
         hubConnection = new HubConnectionBuilder()
-        .WithUrl("https://localhost:7254/Times")
+        .WithUrl("https://localhost:7032/RaceData")
         .ConfigureLogging(logging =>
         {
             // Log to the Console
