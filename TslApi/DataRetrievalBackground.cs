@@ -22,6 +22,7 @@ namespace TslApi
             {
                 var datetime = DateTime.UtcNow;
                 Debug.WriteLine($"Send Data at {datetime}");
+                _logger.LogInformation($"Send Data at {datetime} from within {nameof(DataRetrievalBackground)}");
                 await _hub.Clients.All.ServerMessage($"Server message sent {datetime}");
             }
         }
