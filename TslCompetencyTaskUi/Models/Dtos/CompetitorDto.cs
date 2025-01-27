@@ -1,6 +1,8 @@
-﻿namespace TslCompetencyTaskUi.Models.Dtos.Interfaces
+﻿using TslCompetencyTaskUi.Models.Dtos.Interfaces;
+
+namespace TslCompetencyTaskUi.Models.Dtos
 {
-    public interface ICompetitorDto
+    public class CompetitorDto : ICompetitorDto
     {
         public string id { get; set; }
         public string? startNumber { get; set; }

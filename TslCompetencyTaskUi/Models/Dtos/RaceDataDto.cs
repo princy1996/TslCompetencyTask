@@ -1,8 +1,9 @@
-﻿using TslCompetencyTaskUi.Models.Enums;
+﻿using TslCompetencyTaskUi.Models.Dtos.Interfaces;
+using TslCompetencyTaskUi.Models.Enums;
 
-namespace TslCompetencyTaskUi.Models.Dtos.Interfaces
+namespace TslCompetencyTaskUi.Models.Dtos
 {
-    public interface IRaceDataDto
+    public class RaceDataDto : IRaceDataDto
     {
         public string sessionId { get; set; }
         public string? series { get; set; }

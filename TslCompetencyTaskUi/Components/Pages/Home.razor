@@ -2,7 +2,7 @@
 @using Microsoft.AspNetCore.SignalR.Client
 @using TslCompetencyTaskUi.Models.Builders
 @using TslCompetencyTaskUi.Models.Classes
-@using TslCompetencyTaskUi.Models.Dtos.Interfaces
+@using TslCompetencyTaskUi.Models.Dtos
 @implements IAsyncDisposable
 
 <!--Use Finished flag for animated checkered flag on side-->
@@ -68,7 +68,7 @@
         })
         .Build();
 
-        hubConnection.On<IRaceDataDto>("SendRaceData", data =>
+        hubConnection.On<RaceDataDto>("SendRaceData", data =>
         {
             raceData = new RaceDataBuilder()
             .AddSessionId(data.sessionId)

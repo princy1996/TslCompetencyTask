@@ -1,4 +1,5 @@
 ﻿using TslCompetencyTaskUi.Models.Classes;
+using TslCompetencyTaskUi.Models.Dtos;
 using TslCompetencyTaskUi.Models.Dtos.Interfaces;
 using TslCompetencyTaskUi.Models.Enums;
 
@@ -36,7 +37,7 @@ namespace TslCompetencyTaskUi.Models.Builders
         {
             _raceData.TimeRemaining = time; return this;
         }
-        public RaceDataBuilder AddClassification(List<ICompetitorDto>? comp)
+        public RaceDataBuilder AddClassification(List<CompetitorDto>? comp)
         {
             List<Competitor?> competitor = new List<Competitor?>();
             foreach (ICompetitorDto compItem in comp)

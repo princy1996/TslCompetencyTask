@@ -1,4 +1,5 @@
 ﻿using TslCompetencyTaskUi.Models.Classes;
+using TslCompetencyTaskUi.Models.Dtos;
 using TslCompetencyTaskUi.Models.Dtos.Interfaces;
 
 namespace TslCompetencyTaskUi.Models.Builders
@@ -61,10 +62,10 @@ namespace TslCompetencyTaskUi.Models.Builders
             }
             _competitor.LastLapTime = timeCon; return this;
         }
-        public CompetitorBuilder AddCurrentLapSectorTimes(Dictionary<string, ITimeDto?> times)
+        public CompetitorBuilder AddCurrentLapSectorTimes(Dictionary<string, TimeDto?> times)
         {
             Dictionary<string, Time?> newTimes = new Dictionary<string, Time?>();
-            foreach (KeyValuePair<string, ITimeDto?> values in times)
+            foreach (KeyValuePair<string, TimeDto?> values in times)
             {
                 //Should handle in builder properly, will do later
                 if (values.Value == null)
