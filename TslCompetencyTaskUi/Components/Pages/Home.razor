@@ -1,17 +1,56 @@
 ﻿@page "/"
 @using Microsoft.AspNetCore.SignalR.Client
+@using TslCompetencyTaskUi.Models.Builders
+@using TslCompetencyTaskUi.Models.Classes
+@using TslCompetencyTaskUi.Models.Dtos.Interfaces
 @implements IAsyncDisposable
 
-<ul>
-    @foreach(var message in _message)
+<!--Use Finished flag for animated checkered flag on side-->
+<!--Also make nicer-->
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Number</th>
+        <th>Team</th>
+        <th>Class</th>
+        <th>Position</th>
+        <th>Lap</th>
+        <th>Fastest Lap</th>
+        <th>Last Lap</th>
+        <th colspan="3">Current Split</th>
+    </tr>
+    @if (isLoaded)
     {
-        <li>@message</li>
+        @foreach (Competitor competitor in raceData.Classification)
+        {
+            <tr>
+                <td>@competitor.Name</td>
+                <td>@competitor.StartNumber</td>
+                <td>@competitor.TeamName</td>
+                <td>@competitor.ClassName</td>
+                <td>@competitor.Position</td>
+                <td>@competitor.Laps</td>
+                <td>@competitor.FastestLapTime.Display</td>
+                <td>@competitor.LastLapTime.Display</td>
+                @foreach (KeyValuePair<string, Time?> splits in competitor.CurrentLapSectorTimes)
+                {
+                    <td colspan="1">@splits.Value.Display</td>
+                }
+            </tr>
+        }
     }
-</ul>
+    else
+    {
+        //Do loading css
+    }
+
+</table>
 
 @code{
     private HubConnection? hubConnection;
     private readonly List<string> _message = new();
+    private RaceData raceData = new RaceData();
+    private bool isLoaded = false;
 
     protected override async Task OnInitializedAsync()
     {
@@ -29,10 +68,20 @@
         })
         .Build();
 
-        hubConnection.On<string>("ServerMessage", message =>
+        hubConnection.On<IRaceDataDto>("SendRaceData", data =>
         {
-            _message.Add(message);
-            InvokeAsync(StateHasChanged);//Invoke async needed still?
+            raceData = new RaceDataBuilder()
+            .AddSessionId(data.sessionId)
+            .AddDuration(data.duration)
+            .AddSessionState(data.sessionState)
+            .AddStartTime(data.startTime)
+            .AddTrack(data.track)
+            .AddSeries(data.series)
+            .AddTimeRemaining(data.timeRemaining)
+            .AddClassification(data.classification)
+            .Build();
+            isLoaded = true;
+            InvokeAsync(StateHasChanged);
         });
 
         await hubConnection.StartAsync();
