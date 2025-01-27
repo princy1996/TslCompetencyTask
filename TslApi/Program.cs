@@ -9,6 +9,8 @@ builder.Services.AddSignalR();
 builder.Services.AddCors();
 builder.Services.AddHostedService<DataRetrievalBackground>();
 
+builder.Services.AddTransient<IDataService, DataService>();
+
 builder.Services.AddAuthorization();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer();//Should use access tokens but time consuming without proper Auth server/log in
 

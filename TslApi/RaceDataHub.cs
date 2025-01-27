@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
 using System.Diagnostics;
+using TslApi.DTOs.Interface;
 
 namespace TslApi
 {
@@ -12,12 +13,6 @@ namespace TslApi
             await Clients.Client(Context.ConnectionId).ServerMessage($"User {Context.User?.Identity?.Name} Connected");
             Debug.WriteLine($"User {Context.User?.Identity?.Name} Connected"); //Remove outside of dev or use middlewear
             await base.OnConnectedAsync();
-        }
-
-        
-        public async Task SendMessage(string message)
-        {
-            await Clients.Client(Context.ConnectionId).ServerMessage(message);
         }
 
         public override async Task OnDisconnectedAsync(Exception? exception)
@@ -34,6 +29,7 @@ namespace TslApi
     public interface IRaceData
     {
         Task ServerMessage(string message);
-        Task SendTimes(string message);
+        Task SendRaceData(IRaceDataDto raceDataDto);
+        Task ErrorNotification(string message);
     }
 }
