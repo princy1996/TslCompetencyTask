@@ -1,16 +1,19 @@
 ﻿using Newtonsoft.Json;
 using TslApi.DTOs.Interface;
 using TslApi.DTOs.Models;
+using TslApi.Models.Interfaces;
 
 namespace TslApi
 {
     public class DataService : IDataService
     {
         private readonly ILogger<DataService> _logger;
+        private readonly IConfig _config;
 
-        public DataService(ILogger<DataService> logger)
+        public DataService(ILogger<DataService> logger, IConfig config)
         {
             _logger = logger;
+            _config = config;
         }
 
         /// <summary>
@@ -21,7 +24,7 @@ namespace TslApi
         public async Task<IRaceDataDto?> GetRaceData()
         {
             HttpClient client = new HttpClient();
-            HttpResponseMessage responseMessage = await client.GetAsync("http://dev-sample-api.tsl-timing.com/sample-data"); //Add to config
+            HttpResponseMessage responseMessage = await client.GetAsync(_config.ConnectionString); //Add to config
             _logger.LogInformation($"{nameof(DataService)} Returned Status code {responseMessage.StatusCode} with reason {responseMessage.ReasonPhrase} at {DateTime.UtcNow}");
 
             if (responseMessage.IsSuccessStatusCode)

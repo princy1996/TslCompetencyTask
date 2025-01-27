@@ -1,7 +1,13 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using TslApi;
+using TslApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
+var config = new Config();
+// Add services to the container.
+// add to extension method to tidy Program later
+builder.Configuration.Bind("AppConfig", config);
+builder.Services.AddSingleton(config);
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
