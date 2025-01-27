@@ -1,9 +1,11 @@
 ﻿@page "/"
 @using Microsoft.AspNetCore.SignalR.Client
+@using Microsoft.Extensions.Options
 @using TslCompetencyTaskUi.Models.Builders
 @using TslCompetencyTaskUi.Models.Classes
 @using TslCompetencyTaskUi.Models.Classes.Interfaces
 @using TslCompetencyTaskUi.Models.Dtos
+@inject IOptions<Config>? config
 @implements IAsyncDisposable
 
 <!--Use Finished flag for animated checkered flag on side-->
@@ -52,19 +54,13 @@
     private readonly List<string> _message = new();
     private RaceData raceData = new RaceData();
     private bool isLoaded = false;
-    private readonly IConfig _config;
-
-    public Home(IConfig config)
-    {
-        _config = config;
-    }
 
     protected override async Task OnInitializedAsync()
     {
         //Move URL and token to appsettings
         hubConnection = new HubConnectionBuilder()
-        .WithUrl(_config.ConnectionString,
-        o => o.AccessTokenProvider = () => Task.FromResult<string?>(_config.JWTBearer))
+        .WithUrl(config.Value.ConnectionString,
+        o => o.AccessTokenProvider = () => Task.FromResult<string?>(config.Value.JWTBearer))
         .ConfigureLogging(logging =>
         {
             // Log to the Console

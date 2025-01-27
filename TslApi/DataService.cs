@@ -1,6 +1,8 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
 using TslApi.DTOs.Interface;
 using TslApi.DTOs.Models;
+using TslApi.Models;
 using TslApi.Models.Interfaces;
 
 namespace TslApi
@@ -8,12 +10,12 @@ namespace TslApi
     public class DataService : IDataService
     {
         private readonly ILogger<DataService> _logger;
-        private readonly IConfig _config;
+        private readonly Config _config;
 
-        public DataService(ILogger<DataService> logger, IConfig config)
+        public DataService(ILogger<DataService> logger, IOptions<Config> config)
         {
             _logger = logger;
-            _config = config;
+            _config = config.Value;
         }
 
         /// <summary>
@@ -23,6 +25,7 @@ namespace TslApi
         /// <exception cref="ArgumentException"></exception>
         public async Task<IRaceDataDto?> GetRaceData()
         {
+            
             HttpClient client = new HttpClient();
             HttpResponseMessage responseMessage = await client.GetAsync(_config.ConnectionString); //Add to config
             _logger.LogInformation($"{nameof(DataService)} Returned Status code {responseMessage.StatusCode} with reason {responseMessage.ReasonPhrase} at {DateTime.UtcNow}");
