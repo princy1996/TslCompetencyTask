@@ -1,6 +1,11 @@
 using TslCompetencyTaskUi.Components;
+using TslCompetencyTaskUi.Models.Classes;
 
 var builder = WebApplication.CreateBuilder(args);
+var config = new Config();
+
+builder.Configuration.Bind("AppConfig", config);
+builder.Services.AddSingleton(config);
 
 // Add services to the container.
 builder.Services.AddRazorComponents()

@@ -2,6 +2,7 @@
 @using Microsoft.AspNetCore.SignalR.Client
 @using TslCompetencyTaskUi.Models.Builders
 @using TslCompetencyTaskUi.Models.Classes
+@using TslCompetencyTaskUi.Models.Classes.Interfaces
 @using TslCompetencyTaskUi.Models.Dtos
 @implements IAsyncDisposable
 
@@ -51,13 +52,19 @@
     private readonly List<string> _message = new();
     private RaceData raceData = new RaceData();
     private bool isLoaded = false;
+    private readonly IConfig _config;
+
+    public Home(IConfig config)
+    {
+        _config = config;
+    }
 
     protected override async Task OnInitializedAsync()
     {
         //Move URL and token to appsettings
         hubConnection = new HubConnectionBuilder()
-        .WithUrl("https://localhost:7032/RaceData",
-        o => o.AccessTokenProvider = () => Task.FromResult<string?>("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IlRzbEFwcCIsInN1YiI6IlRzbEFwcCIsImp0aSI6IjQ4OWZlMmE0IiwiYXVkIjpbImh0dHA6Ly9sb2NhbGhvc3Q6MTEwMyIsImh0dHBzOi8vbG9jYWxob3N0OjQ0MzAxIiwiaHR0cDovL2xvY2FsaG9zdDo1MTI4IiwiaHR0cHM6Ly9sb2NhbGhvc3Q6NzAzMiJdLCJuYmYiOjE3Mzc4NDkyODEsImV4cCI6MTc0NTYyNTI4MSwiaWF0IjoxNzM3ODQ5MjgyLCJpc3MiOiJkb3RuZXQtdXNlci1qd3RzIn0._Esz44m3wKRKTHwEb4dN-8VqMBcXLmrPiTqRWRxwS0Y"))
+        .WithUrl(_config.ConnectionString,
+        o => o.AccessTokenProvider = () => Task.FromResult<string?>(_config.JWTBearer))
         .ConfigureLogging(logging =>
         {
             // Log to the Console
