@@ -1,8 +1,11 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using TslApi;
 using TslApi.Models;
+using TslApi.Models.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.Configure<Config>(builder.Configuration.GetSection(Config.ConfigRef));
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

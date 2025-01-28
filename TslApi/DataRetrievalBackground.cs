@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.SignalR;
+using Microsoft.Extensions.Options;
 using System.Diagnostics;
+using TslApi.Models;
 using TslApi.Models.Interfaces;
 
 namespace TslApi
@@ -10,14 +12,14 @@ namespace TslApi
         private readonly ILogger<DataRetrievalBackground> _logger;
         private readonly IHubContext<RaceDataHub, IRaceData> _hub;
         private readonly IDataService _dataService;
-        private readonly IConfig _config;
+        private readonly Config _config;
 
-        public DataRetrievalBackground(ILogger<DataRetrievalBackground> logger, IHubContext<RaceDataHub, IRaceData> hub, IDataService data, IConfig config)
+        public DataRetrievalBackground(ILogger<DataRetrievalBackground> logger, IHubContext<RaceDataHub, IRaceData> hub, IDataService data, IOptions<Config> config)
         {
             _logger = logger;
             _hub = hub;
             _dataService = data;
-            _config = config;
+            _config = config.Value;
             TimeToWait = TimeSpan.FromSeconds(_config.RaceHubBackgroundInterval);
         }
 
