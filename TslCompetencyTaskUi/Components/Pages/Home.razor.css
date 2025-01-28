@@ -1,0 +1,98 @@
+﻿
+body {
+    background: var(--background);
+    font-family: 'Cambria Math';
+}
+
+.lesserTime p {
+    color: var(--red)
+}
+
+    .lesserTime p:hover {
+        filter: brightness(110%);
+    }
+
+table {
+    width: 100%;
+    position: relative;
+    margin: 10px;
+    text-align: center;
+}
+
+tr {
+    border-top: 1px solid rgb(200,200,200);
+    border-collapse: collapse;
+}
+
+.NoBoarder {
+    border: none !important;
+}
+
+.header {
+    color: rgb(240, 240, 240, .8);
+    background: rgb(0,0,0, .8);
+    text-align: inherit;
+    height: 75px;
+}
+
+
+/* rows */
+.trackRow {
+    padding: 20px 0;
+    height: 50px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.2s ease-out;
+    color: rgb(255,255,255, .8);
+    background: rgb(0,0,0, 0.6);
+}
+
+    .trackRow:hover {
+        filter: brightness(130%);
+        height: 65px;
+    }
+
+.updateBetterPos {
+    animation: updateBetterPos 1s ease-out;
+    animation-fill-mode: backwards;
+}
+
+.updateWorsePos {
+    animation: updateWorsePos 1s ease-out;
+    animation-fill-mode: backwards;
+}
+
+.updateFastestLap {
+    animation: updateFastestLap 1s ease-out;
+    animation-fill-mode: backwards;
+}
+
+@keyframes updateBetterPos {
+    0% {
+        background: rgb(8, 208, 0);
+    }
+
+    80% {
+        background: rgb(8, 208, 0);
+    }
+}
+
+@keyframes updateFastestLap {
+    0% {
+        background: rgb(165, 17, 255);
+    }
+
+    80% {
+        background: rgb(165, 17, 255);
+    }
+}
+
+@keyframes updateWorsePos {
+    0% {
+        background: rgb(181, 48, 48);
+    }
+
+    80% {
+        background: rgb(181, 48, 48);
+    }
+}

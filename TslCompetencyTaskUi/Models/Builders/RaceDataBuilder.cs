@@ -1,4 +1,5 @@
-﻿using TslCompetencyTaskUi.Models.Classes;
+﻿using System.Globalization;
+using TslCompetencyTaskUi.Models.Classes;
 using TslCompetencyTaskUi.Models.Dtos;
 using TslCompetencyTaskUi.Models.Dtos.Interfaces;
 using TslCompetencyTaskUi.Models.Enums;
@@ -19,7 +20,7 @@ namespace TslCompetencyTaskUi.Models.Builders
         }
         public RaceDataBuilder AddTrack(string? track)
         {
-            _raceData.SessionId = track; return this;
+            _raceData.Track = track; return this;
         }
         public RaceDataBuilder AddSessionState(SessionState sessionState)
         {
@@ -27,7 +28,17 @@ namespace TslCompetencyTaskUi.Models.Builders
         }
         public RaceDataBuilder AddStartTime(string? time)
         {
-            _raceData.StartTime = time; return this;
+            DateTime theDate;
+            if (DateTime.TryParse(time, CultureInfo.CurrentCulture, DateTimeStyles.None, out theDate))
+            {
+                _raceData.StartTime = theDate.ToString();
+            }
+            else
+            {
+                // the parsing failed, return some sensible default value
+                _raceData.StartTime = "Couldn't read the date";
+            }
+            return this;
         }
         public RaceDataBuilder AddDuration(string? duration)
         {
