@@ -98,11 +98,6 @@
     private bool isFirstLoad = false;
     private readonly IConfig _config;
 
-    public Home(IConfig config)
-    {
-        _config = config;
-    }
-
     protected override async Task OnInitializedAsync()
     {
         //Move URL and token to appsettings
