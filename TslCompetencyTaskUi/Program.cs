@@ -1,6 +1,9 @@
 using TslCompetencyTaskUi.Components;
+using TslCompetencyTaskUi.Models.Classes;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.Configure<Config>(builder.Configuration.GetSection(Config.ConfigRef));
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
